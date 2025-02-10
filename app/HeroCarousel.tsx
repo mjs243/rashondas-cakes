@@ -37,17 +37,12 @@ export default function HeroCarousel() {
     return (
         <section className="relative w-full h-[60vh] overflow-hidden bg-black text-white">
             {/* Slide Image */}
-            <div className="absolute inset-0">
-                <Image
-                    src={slide.img}
-                    alt={slide.caption}
-                    fill
-                    className="object-cover"
-                />
+            <div className="absolute inset-0 z-0">
+                <Image src={slide.img} alt={slide.caption} fill className="object-cover" />
                 <div className="absolute inset-0 bg-black bg-opacity-30" />
             </div>
 
-            {/* Caption & Buttons */}
+            {/* Caption & Button */}
             <div className="relative z-10 h-full flex flex-col justify-center items-center text-center">
                 <h2 className="text-4xl font-bold mb-4">{slide.caption}</h2>
                 <a
@@ -61,16 +56,16 @@ export default function HeroCarousel() {
             {/* Nav Arrows */}
             <button
                 onClick={handlePrev}
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-gray-700 text-white px-2 py-1 rounded hover:bg-gray-600"
-                >
-                    ◀
-                </button>
-                <button
-                    onClick={handleNext}
-                    className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-gray-700 text-white px-2 py-1 rounded hover:bg-gray-600"
-                >
-                    ▶
-                </button>
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-gray-700 text-white px-3 py-2 rounded-full hover:bg-gray-600 z-20"
+            >
+                ◀
+            </button>
+            <button
+                onClick={handleNext}
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-gray-700 text-white px-3 py-2 rounded-full hover:bg-gray-600 z-20"
+            >
+                ▶
+            </button>
         </section>
     );
 }
