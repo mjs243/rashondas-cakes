@@ -6,17 +6,17 @@ import Image from "next/image";
 const dummySlides = [
     {
         id: 1,
-        img: "/images/slide1.jpg",
+        img: "http://localhost:3001/images/slide1.jpg",
         caption: "Freshly Baked Goodness",
     },
     {
         id: 2,
-        img: "/images/slide2.jpg",
+        img: "http://localhost:3001/images/slide2.jpg",
         caption: "Made with TLC",
     },
     {
         id: 3,
-        img: "/images/slide3.jpg",
+        img: "http://localhost:3001/images/slide3.jpg",
         caption: "Come Get This Sugar!"
     },
 ];
