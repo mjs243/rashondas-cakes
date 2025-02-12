@@ -11,9 +11,11 @@
     "dev:all": "concurrently \"npm run dev\" \"npm run keystone:dev\""
   },
   "dependencies": {
+    "framer-motion": "^12.4.2",
     "next": "15.1.4",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-hot-toast": "^2.5.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
