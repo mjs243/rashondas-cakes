@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from 'next/link'
 import "./globals.css";
+import { CartProvider } from "./components/CartContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,17 +37,15 @@ export const metadata: Metadata = {
 // }
 
 
-export default function RootLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body className="bg-pink-50 text-gray-800">
-        <Header />
-        <main>{children}</main>
-        <Footer />
+        <CartProvider>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+        </CartProvider>
       </body>
     </html>
   );
