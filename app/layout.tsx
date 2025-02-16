@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Rashonda's Cakes",
+  title: "First Lady Pound Cakes",
   description: "Enjoy our delicious cakes!",
 };
 
@@ -37,14 +37,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 }
 
 /**
- * Header Component: contains the site nav.
+ * Header Component
  */
 function Header() {
   return (
     <header className="bg-white shadow-sm">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         <div className="font-bold text-xl text-pink-600">
-          <Link href="/">Rashonda's Cakes</Link>
+          <Link href="/">First Lady Pound Cakes</Link>
         </div>
         <nav>
           <ul className="flex gap-6">
@@ -75,7 +75,7 @@ function Footer() {
     <footer className="bg-white mt-12 border-t">
       <div className="max-w-7xl mx-auto px-4 py-6 text-center">
         <p className="text-sm text-gray-500">
-          © {new Date().getFullYear()} Rashonda’s Cakes. All rights reserved.
+          © {new Date().getFullYear()} First Lady Pound Cakes. All rights reserved.
         </p>
       </div>
     </footer>
