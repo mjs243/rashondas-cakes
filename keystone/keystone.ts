@@ -49,6 +49,15 @@ export default withAuth(
                 },
                 storagePath: 'public/images',
             },
+            galleryImages: {
+                kind: 'local',
+                type: 'image',
+                generateUrl: path => `/gallery-images${path}`,
+                serverRoute: {
+                    path: '/gallery-images',
+                },
+                storagePath: 'public/gallery-images',
+            }
         },
         session: statelessSessions(sessionConfig),
         ui: {
