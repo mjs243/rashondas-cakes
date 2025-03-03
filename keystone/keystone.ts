@@ -52,7 +52,7 @@ export default withAuth(
             galleryImages: {
                 kind: 'local',
                 type: 'image',
-                generateUrl: path => `/gallery-images${path}`,
+                generateUrl: (path) => `/gallery-images${path}`,
                 serverRoute: {
                     path: '/gallery-images',
                 },

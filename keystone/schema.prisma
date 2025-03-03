@@ -30,3 +30,16 @@ model User {
   email    String @unique @default("")
   password String
 }
+
+model GalleryImage {
+  id              String    @id @default(cuid())
+  title           String    @default("")
+  description     String    @default("")
+  image_id        String?
+  image_filesize  Int?
+  image_width     Int?
+  image_height    Int?
+  image_extension String?
+  galleryImages   String?
+  uploadedAt      DateTime? @default(now())
+}

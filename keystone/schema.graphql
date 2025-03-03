@@ -185,6 +185,70 @@ input UserCreateInput {
   password: String
 }
 
+type GalleryImage {
+  id: ID!
+  title: String
+  description: String
+  image: ImageFieldOutput
+  galleryImages: JSON
+  uploadedAt: DateTime
+}
+
+scalar DateTime @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
+
+input GalleryImageWhereUniqueInput {
+  id: ID
+}
+
+input GalleryImageWhereInput {
+  AND: [GalleryImageWhereInput!]
+  OR: [GalleryImageWhereInput!]
+  NOT: [GalleryImageWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  description: StringFilter
+  uploadedAt: DateTimeNullableFilter
+}
+
+input DateTimeNullableFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: DateTimeNullableFilter
+}
+
+input GalleryImageOrderByInput {
+  id: OrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  uploadedAt: OrderDirection
+}
+
+input GalleryImageUpdateInput {
+  title: String
+  description: String
+  image: ImageFieldInput
+  galleryImages: JSON
+  uploadedAt: DateTime
+}
+
+input GalleryImageUpdateArgs {
+  where: GalleryImageWhereUniqueInput!
+  data: GalleryImageUpdateInput!
+}
+
+input GalleryImageCreateInput {
+  title: String
+  description: String
+  image: ImageFieldInput
+  galleryImages: JSON
+  uploadedAt: DateTime
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -203,6 +267,12 @@ type Mutation {
   updateUsers(data: [UserUpdateArgs!]!): [User]
   deleteUser(where: UserWhereUniqueInput!): User
   deleteUsers(where: [UserWhereUniqueInput!]!): [User]
+  createGalleryImage(data: GalleryImageCreateInput!): GalleryImage
+  createGalleryImages(data: [GalleryImageCreateInput!]!): [GalleryImage]
+  updateGalleryImage(where: GalleryImageWhereUniqueInput!, data: GalleryImageUpdateInput!): GalleryImage
+  updateGalleryImages(data: [GalleryImageUpdateArgs!]!): [GalleryImage]
+  deleteGalleryImage(where: GalleryImageWhereUniqueInput!): GalleryImage
+  deleteGalleryImages(where: [GalleryImageWhereUniqueInput!]!): [GalleryImage]
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
@@ -232,6 +302,9 @@ type Query {
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
   usersCount(where: UserWhereInput! = {}): Int
+  galleryImage(where: GalleryImageWhereUniqueInput!): GalleryImage
+  galleryImages(where: GalleryImageWhereInput! = {}, orderBy: [GalleryImageOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: GalleryImageWhereUniqueInput): [GalleryImage!]
+  galleryImagesCount(where: GalleryImageWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
 }

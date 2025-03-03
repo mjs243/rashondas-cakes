@@ -33,7 +33,7 @@ __export(keystone_exports, {
   default: () => keystone_default
 });
 module.exports = __toCommonJS(keystone_exports);
-var import_core3 = require("@keystone-6/core");
+var import_core4 = require("@keystone-6/core");
 
 // schemas/Product.ts
 var import_core = require("@keystone-6/core");
@@ -82,10 +82,35 @@ var User = (0, import_core2.list)({
   }
 });
 
+// schemas/GalleryImage.ts
+var import_core3 = require("@keystone-6/core");
+var import_fields3 = require("@keystone-6/core/fields");
+var import_access3 = require("@keystone-6/core/access");
+var GalleryImage = (0, import_core3.list)({
+  access: import_access3.allowAll,
+  fields: {
+    title: (0, import_fields3.text)({ validation: { isRequired: true } }),
+    description: (0, import_fields3.text)({ ui: { displayMode: "textarea" } }),
+    // For the standard image field
+    image: (0, import_fields3.image)({
+      storage: "galleryImages"
+    }),
+    // For your bulk uploader
+    galleryImages: (0, import_fields3.json)({
+      ui: {
+        views: "./fields"
+        // Relative path from schemas directory
+      }
+    }),
+    uploadedAt: (0, import_fields3.timestamp)({ defaultValue: { kind: "now" } })
+  }
+});
+
 // schemas/index.ts
 var lists = {
   Product,
-  User
+  User,
+  GalleryImage
 };
 
 // keystone.ts
@@ -114,7 +139,7 @@ var { withAuth } = (0, import_auth.createAuth)({
 });
 console.log("Setting up Keystone config...");
 var keystone_default = withAuth(
-  (0, import_core3.config)({
+  (0, import_core4.config)({
     db: {
       provider: "sqlite",
       url: "file:./keystone.db"
@@ -129,6 +154,15 @@ var keystone_default = withAuth(
           path: "/images"
         },
         storagePath: "public/images"
+      },
+      galleryImages: {
+        kind: "local",
+        type: "image",
+        generateUrl: (path2) => `/gallery-images${path2}`,
+        serverRoute: {
+          path: "/gallery-images"
+        },
+        storagePath: "public/gallery-images"
       }
     },
     session: (0, import_session.statelessSessions)(sessionConfig),

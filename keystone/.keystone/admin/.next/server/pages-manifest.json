@@ -1,1 +1,9 @@
-{}
+{
+  "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
+  "/_document": "pages/_document.js",
+  "/signin": "pages/signin.js",
+  "/gallery-images": "pages/gallery-images.js",
+  "/gallery-images/create": "pages/gallery-images/create.js",
+  "/": "pages/index.js"
+}

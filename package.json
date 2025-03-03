@@ -11,15 +11,19 @@
     "dev:all": "concurrently \"npm run dev\" \"npm run keystone:dev\""
   },
   "dependencies": {
+    "@types/uuid": "^10.0.0",
+    "formidable": "^3.5.2",
     "framer-motion": "^12.4.2",
     "next": "15.1.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hot-toast": "^2.5.1",
-    "stripe": "^17.6.0"
+    "stripe": "^17.6.0",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@types/formidable": "^3.4.5",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
