@@ -21,11 +21,7 @@ interface BulkImageUploaderProps {
   onChange: (value: FileData[]) => void;
 }
 
-export const BulkImageUploader: React.FC<BulkImageUploaderProps> = ({
-  field,
-  value,
-  onChange,
-}) => {
+export const BulkImageUploader: React.FC<BulkImageUploaderProps> = ({ field, value, onChange }) => {
   const [isUploading, setIsUploading] = useState(false);
   const { addToast } = useToasts();
 
@@ -36,11 +32,12 @@ export const BulkImageUploader: React.FC<BulkImageUploaderProps> = ({
     setIsUploading(true);
 
     try {
+      // Add skip parameter to bypass GraphQL upload middleware
       const uploadPromises = Array.from(files).map(async (file) => {
         const formData = new FormData();
         formData.append('file', file);
 
-        const response = await fetch('/api/upload', {
+        const response = await fetch('/upload-bulk', {
           method: 'POST',
           body: formData,
         });
@@ -93,15 +90,15 @@ export const BulkImageUploader: React.FC<BulkImageUploaderProps> = ({
         >
           {isUploading ? 'Uploading...' : 'Select Images'}
         </Button>
-
+        
         {value && value.length > 0 && (
           <div style={{ marginTop: '16px', display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
             {value.map((file, i) => (
               <div key={i} style={{ position: 'relative' }}>
-                <img
-                  src={file.url}
-                  alt={file.filename}
-                  style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                <img 
+                  src={file.url} 
+                  alt={file.filename} 
+                  style={{ width: '100px', height: '100px', objectFit: 'cover' }} 
                 />
                 <Button
                   size="small"

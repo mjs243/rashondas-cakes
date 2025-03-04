@@ -187,14 +187,10 @@ input UserCreateInput {
 
 type GalleryImage {
   id: ID!
-  title: String
-  description: String
+  altText: String
   image: ImageFieldOutput
-  galleryImages: JSON
-  uploadedAt: DateTime
+  gallery: Gallery
 }
-
-scalar DateTime @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
 
 input GalleryImageWhereUniqueInput {
   id: ID
@@ -205,35 +201,25 @@ input GalleryImageWhereInput {
   OR: [GalleryImageWhereInput!]
   NOT: [GalleryImageWhereInput!]
   id: IDFilter
-  title: StringFilter
-  description: StringFilter
-  uploadedAt: DateTimeNullableFilter
-}
-
-input DateTimeNullableFilter {
-  equals: DateTime
-  in: [DateTime!]
-  notIn: [DateTime!]
-  lt: DateTime
-  lte: DateTime
-  gt: DateTime
-  gte: DateTime
-  not: DateTimeNullableFilter
+  altText: StringFilter
+  gallery: GalleryWhereInput
 }
 
 input GalleryImageOrderByInput {
   id: OrderDirection
-  title: OrderDirection
-  description: OrderDirection
-  uploadedAt: OrderDirection
+  altText: OrderDirection
 }
 
 input GalleryImageUpdateInput {
-  title: String
-  description: String
+  altText: String
   image: ImageFieldInput
-  galleryImages: JSON
-  uploadedAt: DateTime
+  gallery: GalleryRelateToOneForUpdateInput
+}
+
+input GalleryRelateToOneForUpdateInput {
+  create: GalleryCreateInput
+  connect: GalleryWhereUniqueInput
+  disconnect: Boolean
 }
 
 input GalleryImageUpdateArgs {
@@ -242,11 +228,77 @@ input GalleryImageUpdateArgs {
 }
 
 input GalleryImageCreateInput {
-  title: String
-  description: String
+  altText: String
   image: ImageFieldInput
-  galleryImages: JSON
-  uploadedAt: DateTime
+  gallery: GalleryRelateToOneForCreateInput
+}
+
+input GalleryRelateToOneForCreateInput {
+  create: GalleryCreateInput
+  connect: GalleryWhereUniqueInput
+}
+
+type Gallery {
+  id: ID!
+  name: String
+  description: String
+  images(where: GalleryImageWhereInput! = {}, orderBy: [GalleryImageOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: GalleryImageWhereUniqueInput): [GalleryImage!]
+  imagesCount(where: GalleryImageWhereInput! = {}): Int
+}
+
+input GalleryWhereUniqueInput {
+  id: ID
+}
+
+input GalleryWhereInput {
+  AND: [GalleryWhereInput!]
+  OR: [GalleryWhereInput!]
+  NOT: [GalleryWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  description: StringFilter
+  images: GalleryImageManyRelationFilter
+}
+
+input GalleryImageManyRelationFilter {
+  every: GalleryImageWhereInput
+  some: GalleryImageWhereInput
+  none: GalleryImageWhereInput
+}
+
+input GalleryOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  description: OrderDirection
+}
+
+input GalleryUpdateInput {
+  name: String
+  description: String
+  images: GalleryImageRelateToManyForUpdateInput
+}
+
+input GalleryImageRelateToManyForUpdateInput {
+  disconnect: [GalleryImageWhereUniqueInput!]
+  set: [GalleryImageWhereUniqueInput!]
+  create: [GalleryImageCreateInput!]
+  connect: [GalleryImageWhereUniqueInput!]
+}
+
+input GalleryUpdateArgs {
+  where: GalleryWhereUniqueInput!
+  data: GalleryUpdateInput!
+}
+
+input GalleryCreateInput {
+  name: String
+  description: String
+  images: GalleryImageRelateToManyForCreateInput
+}
+
+input GalleryImageRelateToManyForCreateInput {
+  create: [GalleryImageCreateInput!]
+  connect: [GalleryImageWhereUniqueInput!]
 }
 
 """
@@ -273,6 +325,12 @@ type Mutation {
   updateGalleryImages(data: [GalleryImageUpdateArgs!]!): [GalleryImage]
   deleteGalleryImage(where: GalleryImageWhereUniqueInput!): GalleryImage
   deleteGalleryImages(where: [GalleryImageWhereUniqueInput!]!): [GalleryImage]
+  createGallery(data: GalleryCreateInput!): Gallery
+  createGalleries(data: [GalleryCreateInput!]!): [Gallery]
+  updateGallery(where: GalleryWhereUniqueInput!, data: GalleryUpdateInput!): Gallery
+  updateGalleries(data: [GalleryUpdateArgs!]!): [Gallery]
+  deleteGallery(where: GalleryWhereUniqueInput!): Gallery
+  deleteGalleries(where: [GalleryWhereUniqueInput!]!): [Gallery]
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
@@ -305,6 +363,9 @@ type Query {
   galleryImage(where: GalleryImageWhereUniqueInput!): GalleryImage
   galleryImages(where: GalleryImageWhereInput! = {}, orderBy: [GalleryImageOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: GalleryImageWhereUniqueInput): [GalleryImage!]
   galleryImagesCount(where: GalleryImageWhereInput! = {}): Int
+  gallery(where: GalleryWhereUniqueInput!): Gallery
+  galleries(where: GalleryWhereInput! = {}, orderBy: [GalleryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: GalleryWhereUniqueInput): [Gallery!]
+  galleriesCount(where: GalleryWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
 }

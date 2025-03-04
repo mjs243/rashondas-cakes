@@ -33,7 +33,7 @@ __export(keystone_exports, {
   default: () => keystone_default
 });
 module.exports = __toCommonJS(keystone_exports);
-var import_core4 = require("@keystone-6/core");
+var import_core5 = require("@keystone-6/core");
 
 // schemas/Product.ts
 var import_core = require("@keystone-6/core");
@@ -85,24 +85,38 @@ var User = (0, import_core2.list)({
 // schemas/GalleryImage.ts
 var import_core3 = require("@keystone-6/core");
 var import_fields3 = require("@keystone-6/core/fields");
-var import_access3 = require("@keystone-6/core/access");
 var GalleryImage = (0, import_core3.list)({
-  access: import_access3.allowAll,
+  access: {
+    operation: {
+      query: () => true,
+      create: () => true,
+      update: () => true,
+      delete: () => true
+    }
+  },
   fields: {
-    title: (0, import_fields3.text)({ validation: { isRequired: true } }),
-    description: (0, import_fields3.text)({ ui: { displayMode: "textarea" } }),
-    // For the standard image field
-    image: (0, import_fields3.image)({
-      storage: "galleryImages"
-    }),
-    // For your bulk uploader
-    galleryImages: (0, import_fields3.json)({
-      ui: {
-        views: "./fields"
-        // Relative path from schemas directory
-      }
-    }),
-    uploadedAt: (0, import_fields3.timestamp)({ defaultValue: { kind: "now" } })
+    altText: (0, import_fields3.text)(),
+    image: (0, import_fields3.image)({ storage: "galleryImages" }),
+    gallery: (0, import_fields3.relationship)({ ref: "Gallery.images" })
+  }
+});
+
+// schemas/Gallery.ts
+var import_core4 = require("@keystone-6/core");
+var import_fields4 = require("@keystone-6/core/fields");
+var Gallery = (0, import_core4.list)({
+  access: {
+    operation: {
+      query: () => true,
+      create: () => true,
+      update: () => true,
+      delete: () => true
+    }
+  },
+  fields: {
+    name: (0, import_fields4.text)({ validation: { isRequired: true } }),
+    description: (0, import_fields4.text)({ ui: { displayMode: "textarea" } }),
+    images: (0, import_fields4.relationship)({ ref: "GalleryImage.gallery", many: true })
   }
 });
 
@@ -110,7 +124,8 @@ var GalleryImage = (0, import_core3.list)({
 var lists = {
   Product,
   User,
-  GalleryImage
+  GalleryImage,
+  Gallery
 };
 
 // keystone.ts
@@ -139,7 +154,7 @@ var { withAuth } = (0, import_auth.createAuth)({
 });
 console.log("Setting up Keystone config...");
 var keystone_default = withAuth(
-  (0, import_core4.config)({
+  (0, import_core5.config)({
     db: {
       provider: "sqlite",
       url: "file:./keystone.db"

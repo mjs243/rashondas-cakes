@@ -32,14 +32,22 @@ model User {
 }
 
 model GalleryImage {
-  id              String    @id @default(cuid())
-  title           String    @default("")
-  description     String    @default("")
+  id              String   @id @default(cuid())
+  altText         String   @default("")
   image_id        String?
   image_filesize  Int?
   image_width     Int?
   image_height    Int?
   image_extension String?
-  galleryImages   String?
-  uploadedAt      DateTime? @default(now())
+  gallery         Gallery? @relation("GalleryImage_gallery", fields: [galleryId], references: [id])
+  galleryId       String?  @map("gallery")
+
+  @@index([galleryId])
+}
+
+model Gallery {
+  id          String         @id @default(cuid())
+  name        String         @default("")
+  description String         @default("")
+  images      GalleryImage[] @relation("GalleryImage_gallery")
 }
