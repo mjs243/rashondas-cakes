@@ -2,9 +2,5 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/galleries": "pages/galleries.js",
-  "/gallery-images": "pages/gallery-images.js",
-  "/products": "pages/products.js",
-  "/users": "pages/users.js",
-  "/gallery-images/create": "pages/gallery-images/create.js"
+  "/": "pages/index.js"
 }

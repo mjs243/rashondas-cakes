@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@keystone-6/cloudinary": "^8.0.0",
+    "@stripe/stripe-js": "^6.0.0",
     "@types/uuid": "^10.0.0",
     "formidable": "^3.5.2",
     "framer-motion": "^12.4.2",
