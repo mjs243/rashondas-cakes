@@ -39,3 +39,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     res.status(500).json({ error: "Unable to create checkout session" });
   }
 }
+
+export default async function POST(req: Request) {
+  try {
+    // Parse the JSON body from the request
+    const body = await req.json();
+    const { cartItems } = body;
+
+    // Construct line items for Stripe
+    const lineItems = cartItems.map((items: any) => ({
+      price_data: {
+        currency: "usd",
+        product_data: {
+          name: items.name,
+          images: [items.imageUrl],
+        },
+        unit_amount: items.price, // in cents
+      },
+      quantity: items.quantity,
+    }));
+  }
+}
